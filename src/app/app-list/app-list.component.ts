@@ -4,6 +4,7 @@ import { EmployeeService } from './../employee.service';
 import { Employee } from './../models/employee';
 import { PageList } from './../models/page-list';
 import { AppComponent } from './../app.component';
+import { TableRequest } from './../models/table-request';
 
 @Component({
   selector: 'app-app-list',
@@ -16,9 +17,9 @@ export class AppListComponent implements OnInit {
     { label:"Alamat", name:"address" }, { label:"Tanggal Lahir", name:"birthDate" },
     { label:"Jabatan", name:"position" }, { label:"NIP", name:"idNumber" }, { label:'Jenis Kelamin', name:'gender' }
   ];
-  orderBy:string = "id";
-  orderType:string = "asc";
+  
   loading:boolean = false;
+  tableRequest:TableRequest = new TableRequest();
   constructor(private employeeService:EmployeeService, private router:Router, private app:AppComponent) { }
   employees:Employee[] | undefined= undefined;
   ngOnInit(): void {
@@ -26,20 +27,31 @@ export class AppListComponent implements OnInit {
   }
   loadItems():void {
     this.loading = true;
-    this.employeeService.getEmployeeList(this.orderBy, this.orderType)
+    this.employeeService.getEmployeeList(this.tableRequest)
     .subscribe((pageList:PageList)=>{
-      this.employees = pageList.content;
-      this.loading = false;
+      this.handleGetItems(pageList);
     }, (err)=> this.handleError(err));
   }
+  goToPage(page:number):void {
+    
+    this.tableRequest.page = page;
+    this.loadItems();
+  }
+  private handleGetItems(pageList:PageList): void {
+    this.employees = pageList.content;
+    this.loading = false;
+    this.tableRequest.page = pageList.number;
+    this.tableRequest.limit = pageList.size;
+    this.tableRequest.totalData = pageList.totalElements;
+  }
   sortBy(key:string) :void {
-    if (this.orderBy != key) {
-      this.orderBy = key;
-      this.orderType = "asc";
+    if (this.tableRequest.orderBy != key) {
+      this.tableRequest.orderBy = key;
+      this.tableRequest.orderType = "asc";
       this.loadItems();
       return;
     }
-    this.orderType = this.orderType == "asc"?"desc":"asc";
+    this.tableRequest.orderType = this.tableRequest.orderType == "asc"?"desc":"asc";
     this.loadItems();
   }
   handleError(error:any) {

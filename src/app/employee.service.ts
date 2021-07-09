@@ -15,13 +15,7 @@ export class EmployeeService {
 
   constructor(private http:HttpClient) { }
 
-  getEmployeeList(orderBy:string, orderType:string):Observable<PageList>{
-    const req:TableRequest = {
-      orderBy:orderBy,
-      orderType:orderType,
-      page:0,
-      limit:0
-    }
+  getEmployeeList(req:TableRequest):Observable<PageList>{
     return this.http.post<PageList>(host+'index', req);
   }
   insert(employee:Employee):Observable<Employee>{

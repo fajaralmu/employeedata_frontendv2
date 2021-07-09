@@ -11,6 +11,7 @@ import { CardComponent } from './card/card.component';
 import { AlertComponent } from './alert/alert.component';
 import { AppFormPositionComponent } from './app-form-position/app-form-position.component';
 import { FormGroupComponent } from './form-group/form-group.component';
+import { PaginationButtonComponent } from './pagination-button/pagination-button.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,8 @@ import { FormGroupComponent } from './form-group/form-group.component';
     CardComponent,
     AlertComponent,
     AppFormPositionComponent,
-    FormGroupComponent
+    FormGroupComponent,
+    PaginationButtonComponent
   ],
   imports: [
     BrowserModule,

@@ -9,7 +9,12 @@
       <div class="col-8 text-center" *ngIf="loading">
         <h3>Loading</h3>
       </div>
-      </div>
+      <div class="col-12">
+        <app-pagination-button  (goToPage) = "goToPage($event)"
+          currentPage=   {{tableRequest.page}}  limit = {{tableRequest.limit}} totalData = {{tableRequest.totalData}}
+          ></app-pagination-button>
+        </div>
+      </div> 
       <div  style="padding:10px; overflow: scroll; height: 70vh">
         <table class="table ">
           <thead>
@@ -17,10 +22,10 @@
             <th class="sortable-header" *ngFor="let header of tableHeaders" (click)="sortBy(header.name)">
               <div style="min-width: 100px;">
                 {{ header.label }}
-                <span *ngIf="header.name == orderBy " style="float: right;">
-                  <i [ngClass]="orderType == 'asc'? 'fas fa-long-arrow-alt-up' : 'fas fa-long-arrow-alt-down'"></i>
+                <span *ngIf="header.name == tableRequest.orderBy " style="float: right;">
+                  <i [ngClass]="tableRequest.orderType == 'asc'? 'fas fa-long-arrow-alt-up' : 'fas fa-long-arrow-alt-down'"></i>
                 </span>
-                <span *ngIf="header.name != orderBy " style="float: right;">
+                <span *ngIf="header.name != tableRequest.orderBy " style="float: right;">
                     <i class="fas fa-sort"></i>
                 </span>
               </div>
@@ -33,7 +38,7 @@
               *ngFor="let employee of employees; let i = index"
               [attr.data-index]="i"
             >
-              <td>{{ i + 1 }}</td>
+              <td>{{ i + 1 + (tableRequest.page * tableRequest.limit) }}</td>
               <td>{{ employee.name }}</td>
               <td>{{ employee.email }}</td>
               <td>{{ employee.address }}</td>
