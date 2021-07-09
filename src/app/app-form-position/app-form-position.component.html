@@ -1,0 +1,19 @@
+<app-card header="{{title}}">
+    
+    <form ngNativeValidate  class="container-fluid" style="margin-top: 20px;" (ngSubmit)="$event.preventDefault(); submit()">
+      <form-group label="Kode Jabatan"> 
+            <input [(ngModel)]="position.code" required type="text" name="name" class="form-control " />
+      </form-group>
+      <form-group label="Nama Jabatan">
+            <input [(ngModel)]="position.name"  required type="text" name="email" class="form-control " />
+      </form-group>
+      <form-group >
+        <div>
+          <a style="margin-right: 10px;" class="btn btn-secondary" routerLink="/index">Kembali</a>
+          <input type="submit" value="Simpan" class="btn btn-primary"/>
+        </div>
+      </form-group> 
+</form>
+</app-card>
+
+

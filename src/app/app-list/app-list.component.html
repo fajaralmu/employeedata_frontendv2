@@ -1,0 +1,60 @@
+ 
+  <div class="card list-card "  >
+    <div class="card-header">Daftar Karyawan</div>
+    <div class="card-body ">
+      <div class="row">
+      <div class="btn-group col-2" style="margin-top: 10px; margin-bottom: 10px;" >
+          <a class="btn btn-success btn-sm" (click)="loadItems()">Reload</a>
+      </div>
+      <div class="col-8 text-center" *ngIf="loading">
+        <h3>Loading</h3>
+      </div>
+      </div>
+      <div  style="padding:10px; overflow: scroll; height: 70vh">
+        <table class="table ">
+          <thead>
+            <th>No</th>
+            <th class="sortable-header" *ngFor="let header of tableHeaders" (click)="sortBy(header.name)">
+              <div style="min-width: 100px;">
+                {{ header.label }}
+                <span *ngIf="header.name == orderBy " style="float: right;">
+                  <i [ngClass]="orderType == 'asc'? 'fas fa-long-arrow-alt-up' : 'fas fa-long-arrow-alt-down'"></i>
+                </span>
+                <span *ngIf="header.name != orderBy " style="float: right;">
+                    <i class="fas fa-sort"></i>
+                </span>
+              </div>
+            </th>
+            <th>Aksi</th>
+          </thead>
+           
+          <tbody  *ngIf="employees != undefined">
+            <tr
+              *ngFor="let employee of employees; let i = index"
+              [attr.data-index]="i"
+            >
+              <td>{{ i + 1 }}</td>
+              <td>{{ employee.name }}</td>
+              <td>{{ employee.email }}</td>
+              <td>{{ employee.address }}</td>
+              <td>{{ employee.birthDateString }}</td>
+              <td>{{ employee.position?.name }}</td>
+              <td>{{ employee.idNumber }}</td>
+              <td>{{ employee.genderString }}</td>
+              <td>
+                <div class="btn-group">
+                  <a class="btn btn-dark btn-sm" (click)="showUpdateForm(employee)">
+                    <i class="fas fa-edit"></i>
+                  </a>
+                  <a class="btn btn-danger btn-sm" (click)="deleteRecord(employee)">
+                    <i class="fas fa-trash"></i>
+                  </a>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div> 
+    </div>
+  </div>
+

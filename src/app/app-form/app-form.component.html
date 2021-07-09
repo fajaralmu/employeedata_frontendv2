@@ -1,0 +1,55 @@
+<app-card header="{{title}}">
+    <div *ngIf="employee ==undefined" class="alert alert-warning">
+      <h2>Loading..</h2>
+    </div>
+    <form *ngIf="employee" ngNativeValidate  class="container-fluid" style="margin-top: 20px;" (ngSubmit)="$event.preventDefault(); submit()">
+      <form-group label="Nama"> 
+            <input [(ngModel)]="employee.name" required type="text" name="name" class="form-control " />
+      </form-group>
+      <form-group label="Tanggal Lahir">
+            <input [(ngModel)]="employee.birthDate"  required type="date" name="birthDate" class="form-control " />
+      </form-group>
+      <form-group label="Email">
+            <input [(ngModel)]="employee.email"  required type="text" name="email" class="form-control " />
+      </form-group>
+      <form-group label="Alamat">
+            <textarea [(ngModel)]="employee.address"  required  name="address" class="form-control ">
+              
+            </textarea>
+      </form-group>
+      <p *ngIf="positions.length == 0">  memuat data... </p>
+      <form-group label="Jabatan" *ngIf="positions.length > 0">
+        <select name="position"   class="form-control" required>
+          <option value="">-- Pilih Jabatan --</option>
+          <option *ngFor="let position of positions" value={{position.id}}
+              (click)="updatePosition(position)"
+              [selected]=" position.id == employee.position?.id ? true : false">
+              {{position.name}}
+          </option>
+        </select>
+      </form-group>
+      <form-group label="NIP">
+          <input  [(ngModel)]="employee.idNumber" required type="number" name="idNumber" class="form-control " />
+      </form-group>
+      <form-group label="Jenis Kelamin">
+        <div>
+          <div class="custom-control custom-radio custom-control-inline">
+            <input required type="radio" id="genderMale" name="gender" [(ngModel)]="employee.gender" [value]=1 class="custom-control-input">
+            <label class="custom-control-label" for="genderMale">Pria</label>
+          </div>
+          <div class="custom-control custom-radio custom-control-inline">
+            <input required type="radio" id="genderFemale" name="gender" [(ngModel)]="employee.gender" [value]=2 class="custom-control-input">
+            <label class="custom-control-label" for="genderFemale">Wanita</label>
+          </div>
+        </div>
+      </form-group>
+      <form-group >
+        <div>
+          <a style="margin-right: 10px;" class="btn btn-secondary" routerLink="/index">Kembali</a>
+          <input type="submit" value="Simpan" class="btn btn-primary"/>
+        </div>
+      </form-group> 
+
+    </form>
+</app-card>
+

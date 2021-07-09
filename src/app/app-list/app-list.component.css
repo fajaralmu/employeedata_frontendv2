@@ -1,0 +1,11 @@
+.sortable-header:hover{
+    cursor: pointer;
+    background-color: lightgray;
+}
+
+@media (min-width: 992px) { 
+    .list-card {
+        margin-left:-9vw;
+        width: 85vw;
+    }
+ }
