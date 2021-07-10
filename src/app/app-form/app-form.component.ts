@@ -15,7 +15,7 @@ import { EmployeeDTO } from './../models/employee-dto';
 export class AppFormComponent implements OnInit {
   state: Observable<object> | undefined;
   title: string = "Edit Data Karyawan";
-  positions: Position[] = [];
+  positions: Position[]|undefined= undefined;
   employee: Employee | undefined = new Employee();
   employeeId: number | undefined;
   constructor(public activatedRoute: ActivatedRoute, 

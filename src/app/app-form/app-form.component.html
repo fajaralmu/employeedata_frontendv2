@@ -17,8 +17,9 @@
               
             </textarea>
       </form-group>
-      <p *ngIf="positions.length == 0">  memuat data... </p>
-      <form-group label="Jabatan" *ngIf="positions.length > 0">
+      <p *ngIf="positions == undefined">  memuat data... </p>
+      <form-group label="Jabatan"  *ngIf="positions && positions.length == 0"> Belum ada data jabatan </form-group>
+      <form-group label="Jabatan" *ngIf="positions && positions.length > 0">
         <select name="position"   class="form-control" required>
           <option value="">-- Pilih Jabatan --</option>
           <option *ngFor="let position of positions" value={{position.id}}
