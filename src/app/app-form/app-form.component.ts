@@ -52,21 +52,37 @@ export class AppFormComponent implements OnInit {
       this.employee = employeeDTO.employee;
     }
   }
+  validateEmail():boolean {
+    if (!this.employee) 
+      return false;
+   
+    const exp = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    if (exp.test(this.employee.email??"")) 
+      return true;
+    
+    return false;
+  }
   submit(): void {
+    if (!this.validateEmail()) {
+      this.app.showInfo("Invalid email");
+      return;
+    }
     this.app.showConfirm("Apakah Anda akan menyimpan data ini?").then((ok) => {
       if (ok) this.doSubmit();
     })
-
   }
   private doSubmit = () => {
     if (!this.employee) return;
     if (this.employeeId && this.employee.id && this.employee.id > 0) {
       this.employeeService.update(this.employee)
-        .subscribe(this.submitSuccess);
+        .subscribe(this.submitSuccess, this.errorSubmit);
       return;
     }
     this.employeeService.insert(this.employee)
-      .subscribe(this.submitSuccess);
+      .subscribe(this.submitSuccess, this.errorSubmit);
+  }
+  errorSubmit = (error:any) => {
+    this.app.showInfo("Gagal menyimpan data").then(()=>{});
   }
   private submitSuccess = (employee: Employee) => {
     this.app.showInfo("Sukses").then(() => {
