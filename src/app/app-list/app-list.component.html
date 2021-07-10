@@ -3,8 +3,13 @@
     <div class="card-header">Daftar Karyawan</div>
     <div class="card-body ">
       <div class="row">
-      <div class="btn-group col-2" style="margin-top: 10px; margin-bottom: 10px;" >
-          <a class="btn btn-success btn-sm" (click)="loadItems()">Reload</a>
+      <div class="col-md-4" style="margin-top: 10px; margin-bottom: 10px;" >
+        <form (ngSubmit)="$event.preventDefault(); goToPage(0)"> 
+          <div class="btn-group ">
+            <input type="search" name="search" [(ngModel)]="tableRequest.search" placeholder="Search" class="form-control" />
+            <input type="submit" class="btn btn-success  "  value="Search" />
+          </div>
+        </form>
       </div>
       <div class="col-8 text-center" *ngIf="loading">
         <h3>Loading</h3>
